@@ -33,4 +33,25 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#power-saving-status').innerText = 'off'
     updateTemperature()
   })
+
+  const displayWeather = (city) => {
+    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=5ed2f0f299fe118a82826ffb0ac4e5ea&units=metric`
+    
+    fetch(url)
+    .then(response => {
+      return response.json() 
+    })
+    .then(data => {
+      document.querySelector('#current-temperature').innerText = data.main.temp
+    })
+  }
+
+  displayWeather('London')
+
+  document.querySelector('#select-city').addEventListener('submit', (event) => {
+    event.preventDefault()
+    const city = document.querySelector('#current-city').value
+
+    displayWeather(city)
+  })
 })
